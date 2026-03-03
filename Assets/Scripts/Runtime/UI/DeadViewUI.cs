@@ -6,9 +6,11 @@ namespace Assets.Scripts.Runtime.UI
 {
     public class DeadViewUI : MonoBehaviour
     {
+        [SerializeField] private Button _backButton;
         [SerializeField] private Button _playAgainButton;
 
         public Action OnPlayAgainButtonPress;
+        public Action OnBackButtonPress;
         private void OnEnable()
         {
             BindButtons();

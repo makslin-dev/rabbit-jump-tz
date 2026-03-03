@@ -29,6 +29,7 @@ namespace Assets.Scripts.Runtime.Managers
             _pauseViewUI.OnExitButtonPress += HandleExitButtonPress;
             _pauseViewUI.OnResumeButtonPress += HandleResumeButtonPress;
             _deadViewUI.OnPlayAgainButtonPress += HandlePlayAgainButtonPress;
+            _deadViewUI.OnBackButtonPress += HandleBackButtonPress;
             _recordsViewUI.OnBackButtonPress += HandleBackButtonPress;
             _privacyPolicyViewUI.OnBackButtonPress += HandleBackButtonPress;
         }
@@ -41,6 +42,7 @@ namespace Assets.Scripts.Runtime.Managers
             _pauseViewUI.OnExitButtonPress -= HandleExitButtonPress;
             _pauseViewUI.OnResumeButtonPress -= HandleResumeButtonPress;
             _deadViewUI.OnPlayAgainButtonPress -= HandlePlayAgainButtonPress;
+            _deadViewUI.OnBackButtonPress -= HandleBackButtonPress;
             _recordsViewUI.OnBackButtonPress -= HandleBackButtonPress;
             _privacyPolicyViewUI.OnBackButtonPress -= HandleBackButtonPress;
 
