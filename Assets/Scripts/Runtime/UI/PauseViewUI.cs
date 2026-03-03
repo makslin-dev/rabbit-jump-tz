@@ -31,12 +31,12 @@ namespace Assets.Scripts.Runtime.UI
         }
         private void ResumeButtonPress()
         {
-            OnResumeButtonPress.Invoke();
+            OnResumeButtonPress?.Invoke();
          
         }
         private void ExitButtonPress()
         {
-            OnExitButtonPress.Invoke();
+            OnExitButtonPress?.Invoke();
         }
     }
 }

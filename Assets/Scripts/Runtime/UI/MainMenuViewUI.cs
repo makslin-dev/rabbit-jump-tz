@@ -35,15 +35,15 @@ namespace Assets.Scripts.Runtime.UI
         }
         private void StartButtonPress()
         {
-            OnStartButtonPress.Invoke();
+            OnStartButtonPress?.Invoke();
         }
         private void RecordsButtonPress()
         {
-            OnRecordsButtonPress.Invoke();
+            OnRecordsButtonPress?.Invoke();
         }
         private void PrivacyPolicyButtonPress()
         {
-            OnPrivacyPolicyButtonPress.Invoke();
+            OnPrivacyPolicyButtonPress?.Invoke();
         }
     }
 }

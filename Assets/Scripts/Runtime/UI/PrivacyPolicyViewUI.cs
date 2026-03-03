@@ -27,7 +27,7 @@ namespace Assets.Scripts.Runtime.UI
         }
         private void BackButtonPress()
         {
-            OnBackButtonPress.Invoke();
+            OnBackButtonPress?.Invoke();
         }
     }
 }

@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public enum ScreenView 
+namespace Assets.Scripts.Core.Enums
 {
-    Records,
-    PrivacyPolicy,
-    GameView,
-    PauseView,
-    MainMenuView,
-    DeadView
+    public enum ScreenView
+    {
+        Records,
+        PrivacyPolicy,
+        GameView,
+        PauseView,
+        MainMenuView,
+        DeadView
+    }
 }

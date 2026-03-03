@@ -25,7 +25,6 @@ namespace Assets.Scripts.Runtime.Managers
 
         private async void Start()
         {
-            
             await LoadGameAsync();
         }
 
@@ -35,18 +34,18 @@ namespace Assets.Scripts.Runtime.Managers
             operation.allowSceneActivation = false;
 
             float timer = 0f;
-            while (!operation.isDone)
+            while (operation.progress < 0.9f)
             {
-                timer += Time.deltaTime;
-
-
-                if (operation.progress >= 0.9f && timer >= minLoadingTime)
-                {
-                    operation.allowSceneActivation = true;
-                }
-
                 await UniTask.Yield();
             }
+            while (timer < minLoadingTime)
+            {
+                timer += Time.deltaTime;
+                await UniTask.Yield();
+            }
+
+            operation.allowSceneActivation = true;
+            await operation;
         }
     }
 }
