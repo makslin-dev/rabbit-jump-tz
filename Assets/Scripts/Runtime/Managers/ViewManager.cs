@@ -1,5 +1,7 @@
+using Assets.Scripts.Core.Enums;
 using Assets.Scripts.Runtime.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Runtime.Managers
 {
@@ -12,14 +14,16 @@ namespace Assets.Scripts.Runtime.Managers
         [SerializeField] private RecordsViewUI _recordsViewUI;
         [SerializeField] private PrivacyPolicyViewUI _privacyPolicyViewUI;
 
-        private void OnEnable()
+        public static bool ShouldStartGameImmediately;
+        private void Start()
         {
             SubscribeToEvents();
+            DecideStartingPoint();
         }
         private void OnDisable()
         {
             UnsubscribeFromEvents();
-        }
+        }   
         private void SubscribeToEvents()
         {
             _gameViewUI.OnPauseButtonPress += HandlePauseButtonPress;
@@ -29,9 +33,11 @@ namespace Assets.Scripts.Runtime.Managers
             _pauseViewUI.OnExitButtonPress += HandleExitButtonPress;
             _pauseViewUI.OnResumeButtonPress += HandleResumeButtonPress;
             _deadViewUI.OnPlayAgainButtonPress += HandlePlayAgainButtonPress;
-            _deadViewUI.OnBackButtonPress += HandleBackButtonPress;
+            _deadViewUI.OnBackButtonPress += HandleBackButtonFromDeadPress;
             _recordsViewUI.OnBackButtonPress += HandleBackButtonPress;
             _privacyPolicyViewUI.OnBackButtonPress += HandleBackButtonPress;
+            ScoreManager.Instance.OnPlayerScoring += HandlePlayerScore;
+            GameManager.Instance.OnPlayerDead += HandlePlayerDead;
         }
         private void UnsubscribeFromEvents()
         {
@@ -42,19 +48,46 @@ namespace Assets.Scripts.Runtime.Managers
             _pauseViewUI.OnExitButtonPress -= HandleExitButtonPress;
             _pauseViewUI.OnResumeButtonPress -= HandleResumeButtonPress;
             _deadViewUI.OnPlayAgainButtonPress -= HandlePlayAgainButtonPress;
-            _deadViewUI.OnBackButtonPress -= HandleBackButtonPress;
+            _deadViewUI.OnBackButtonPress -= HandleBackButtonFromDeadPress;
             _recordsViewUI.OnBackButtonPress -= HandleBackButtonPress;
             _privacyPolicyViewUI.OnBackButtonPress -= HandleBackButtonPress;
-
+            ScoreManager.Instance.OnPlayerScoring -= HandlePlayerScore;
+            GameManager.Instance.OnPlayerDead -= HandlePlayerDead;
+        }
+        private void DecideStartingPoint()
+        {
+            if (ShouldStartGameImmediately)
+            {
+                ShouldStartGameImmediately = false;
+                ChangeView(ScreenView.GameView);
+                GameManager.Instance.Unpause();
+            }
+        }
+        private void HandlePlayerDead()
+        {
+            _deadViewUI.ChangeScore(Mathf.RoundToInt(ScoreManager.Instance.Score));
+            ChangeView(ScreenView.DeadView);
+        }
+        private void HandlePlayerScore(int amount)
+        {
+            print("updating score");
+            _gameViewUI.UpdatePlayerScore(amount);
         }
         private void HandleBackButtonPress()
         {
+            print("going here");
             ChangeView(ScreenView.MainMenuView);
+        }
+        private void HandleBackButtonFromDeadPress()
+        {
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(currentSceneIndex);
         }
         private void HandlePlayAgainButtonPress()
         {
-            //Restart?
-            ChangeView(ScreenView.GameView);
+            ShouldStartGameImmediately = true;
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(currentSceneIndex);
         }
         private void HandleResumeButtonPress()
         {
@@ -66,10 +99,12 @@ namespace Assets.Scripts.Runtime.Managers
         }
         private void HandleStartButtonPress()
         {
+            GameManager.Instance.Unpause();
             ChangeView(ScreenView.GameView);
         }
         private void HandleRecordsButtonPress()
         {
+            _recordsViewUI.InitBestScores();
             ChangeView(ScreenView.Records);
         }
         private void HandlePauseButtonPress()

@@ -27,9 +27,14 @@ namespace Assets.Scripts.Runtime.UI
         {
             _pauseButton.onClick.RemoveListener(PauseButtonPress);
         }
+        
         private void PauseButtonPress()
         {
-            OnPauseButtonPress.Invoke();
+            OnPauseButtonPress?.Invoke();
+        }
+        public void UpdatePlayerScore(int amount)
+        {
+            _scoreText.text = $"Score: {amount}";
         }
     }
 }
