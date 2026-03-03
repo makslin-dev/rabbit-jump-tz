@@ -4,15 +4,15 @@ namespace Assets.Scripts.Runtime.Player
 {
     public class RabbitController : MonoBehaviour
     {
-        public float moveSpeed = 8f;
-        public float jumpForce = 12f;
-        private Rigidbody2D rb;
-        private float screenWidth;
+        [SerializeField] private float _moveSpeed = 8f;
+        [SerializeField] private float _jumpForce = 12f;
+        private Rigidbody2D _rb;
+        private float _screenWidth;
 
         void Start()
         {
-            rb = GetComponent<Rigidbody2D>();
-            screenWidth = Screen.width;
+            _rb = GetComponent<Rigidbody2D>();
+            _screenWidth = Screen.width;
         }
 
         void Update()
@@ -27,14 +27,14 @@ namespace Assets.Scripts.Runtime.Player
 
             if (Input.GetMouseButton(0))
             {
-                moveDirection = Input.mousePosition.x < screenWidth / 2 ? -1 : 1;
+                moveDirection = Input.mousePosition.x < _screenWidth / 2 ? -1 : 1;
             }
             else
             {
                 moveDirection = Input.GetAxis("Horizontal");
             }
 
-            rb.linearVelocity = new Vector2(moveDirection * moveSpeed, rb.linearVelocity.y);
+            _rb.linearVelocity = new Vector2(moveDirection * _moveSpeed, _rb.linearVelocity.y);
         }
 
         void CheckScreenBounds()
@@ -53,9 +53,9 @@ namespace Assets.Scripts.Runtime.Player
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (rb.linearVelocity.y <= 0.1f)
+            if (_rb.linearVelocity.y <= 0.1f)
             {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _jumpForce);
             }
         }
     }
