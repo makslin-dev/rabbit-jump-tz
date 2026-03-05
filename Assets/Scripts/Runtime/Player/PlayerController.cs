@@ -6,12 +6,11 @@ namespace Assets.Scripts.Runtime.Player
     {
         [SerializeField] private float _moveSpeed = 8f;
         [SerializeField] private float _jumpForce = 12f;
-        private Rigidbody2D _rb;
+        [SerializeField] private Rigidbody2D _rb;
         private float _screenWidth;
 
         void Start()
-        {
-            _rb = GetComponent<Rigidbody2D>();
+        {          
             _screenWidth = Screen.width;
         }
 

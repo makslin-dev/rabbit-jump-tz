@@ -2248,8 +2248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a695b26f37feb438d75b59fd9bb070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
-  jumpForce: 12
+  _moveSpeed: 8
+  _jumpForce: 12
+  _rb: {fileID: 633021187}
 --- !u!50 &633021187
 Rigidbody2D:
   serializedVersion: 5
@@ -5599,7 +5600,7 @@ MonoBehaviour:
   - {fileID: 6242363186275465461, guid: 85b68f98ec42681438a1c66c9e21063f, type: 3}
   _platformsSpawnedPerStepCount: {x: 1, y: 1}
   _stepsCountToSpawn: 5
-  _stepsCountToDelete: 2
+  _stepsCountToDelete: 3
   _stepHeight: 4
   _bounds: {x: -2, y: 2}
 --- !u!4 &1652923373
